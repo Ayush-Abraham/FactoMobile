@@ -1,14 +1,13 @@
 import React, {Component} from 'react';
 import { StyleSheet, Text, View, StatusBar, ScrollView} from 'react-native';
 import Constants from 'expo-constants';
-//import fetch from 'node-fetch'
 
 import Navbar from './Navbar';
 import FactHolder from './FactHolder'
 
 import {mainStyles} from './styles'
 
-import DropdownMenu from 'react-native-dropdown-menu';
+//import DropdownMenu from 'react-native-dropdown-menu';
 
 
 const getInfo = async (month,date) => {
