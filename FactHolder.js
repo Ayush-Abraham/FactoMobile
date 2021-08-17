@@ -1,41 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Platform} from 'react-native';
 
-const styles = StyleSheet.create({
-	container:{
-		display: 'flex',
-		//alignItems: 'center',
-		justifyContent: 'center',
-		borderWidth: 2,
-		borderStyle: 'solid',
-		borderColor: '#bbb',
-		margin: 7,
-		padding: 10
-		
-	},
-	factHolder: {
-		margin: 10,
-	    padding: 10,
-	    backgroundColor: '#3a3f4a'
-  	},
-  	factFont:{
-  		fontSize: Platform.OS === 'android'? 14:18,
-  		color: 'rgb(230,230,230)',
-  	},
-  	dateFont:{
-  		fontSize: Platform.OS === 'android'? 16:20,
-  		color: 'rgb(230,230,230)',
-  		alignItems: 'flex-start'
-  	},
-  	dateContainer:{
-  		alignItems: 'center'
-  	},
-  	factContainer:{
-  		alignItems: 'flex-start',
-  		padding: '2%'
-  	}
-
-})
+import {factHolderStyles} from './styles'
 
 /*const ColoredLine = ({ color }) => (
     <hr
@@ -47,36 +13,42 @@ const styles = StyleSheet.create({
     />
 );*/
 
-class FactHolder extends Component {
-	constructor(props){
-		super(props);
-    	this.state = {	      	
-	      	rawInfo: this.props.rawInfo,
-      }
-	}
+class FactHolder extends Component {	
 
-	render(){		
-		const events=this.state.rawInfo.data.Events;
-		//console.log(factList)
-		const eventList = events.map((i)=>
-			<View style={styles.container} key={i.text}>
+	render(){
 
-				<View style={styles.dateContainer}>
-					<Text style={styles.dateFont}>{i.text.includes("&#8211;")? i.text.split(" &#8211;")[0] : i.text.split(" –")[0]}</Text>
+		//console.log('given value is '+this.props.factType)
+
+		var facts;
+
+		if(this.props.factType=='event'){
+			facts=this.props.rawInfo.data.Events;
+		}
+		else if(this.props.factType=='birth'){
+			facts=this.props.rawInfo.data.Births;
+		}
+		else{
+			facts=this.props.rawInfo.data.Deaths;
+		}		
+
+		const factList = facts.map((i)=>
+			<View style={factHolderStyles.container} key={i.text}>
+
+				<View style={factHolderStyles.dateContainer}>
+					<Text style={factHolderStyles.dateFont}>{i.text.includes("&#8211;")? i.text.split(" &#8211;")[0] : i.text.split(" –")[0]}</Text>
 				</View>	
 
 				{/*<ColoredLine/>*/}
 
-				<View style={styles.factContainer}>
-					<Text style={styles.factFont}>{i.text.includes("&#8211;")? i.text.split("&#8211; ")[1] : i.text.split("– ")[1]}</Text>
-				</View>		
-
+				<View style={factHolderStyles.factContainer}>
+					<Text style={factHolderStyles.factFont}>{i.text.includes("&#8211;")? i.text.split("&#8211; ")[1] : i.text.split("– ")[1]}</Text>
+				</View>	
 			</View>			
 		)
 
 		return(			   			
-			<View style={styles.factHolder}>
-				{eventList}
+			<View style={factHolderStyles.factHolder}>
+				{factList}
 			</View>
 		)
 	}

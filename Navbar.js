@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Platform} from 'react-native';
+import { StyleSheet, Text, View, Platform, Picker} from 'react-native';
+
+
+import {navStyles} from './styles'
 
 function currentDate(){
     var today = new Date();
@@ -9,51 +12,41 @@ function currentDate(){
     return date
 }
 
-const styles = StyleSheet.create({
-    header:{
-        width: '100%' ,
-        height: Platform.OS === 'android'? '10%':60,
-        flexDirection: 'row',
-        position: 'absolute',
-        top: 0,
-    },
-    headerDate:{
-        backgroundColor: '#04AA6D',
-        width: Platform.OS === 'android'? '25%':'15%',
-        height: '100%',
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingLeft: Platform.OS === 'android'? '3%':0
-       
-    },
-    headerTitle:{
-        backgroundColor: '#333',
-        width: Platform.OS === 'android'? '75%':'85%',
-        height: '100%',
-        alignItems: 'center',
-        justifyContent: 'center',
+class Navbar extends Component { 
 
-    },
-    headerText:{
-        fontWeight: 'bold',
-        fontSize: Platform.OS === 'android'? 15:23,
-        color: '#f2f2f2',
-    }
+     constructor(props) {
+        super(props);
+        this.state = {
+            chosenIndex:0,
+            language:''
+        };
+    }   
 
-})
-
-class Navbar extends Component {
-
-    render(){
-        //console.log(this.props.testdata)
-
+    render(){         
+   
         return(
-                <View style={styles.header}>
-                    <View style={styles.headerDate}>
-                        <Text style={styles.headerText}>{currentDate()}</Text>
+                <View style={navStyles.header}>
+                    <View style={navStyles.headerDate}>
+                        <Text style={navStyles.headerText}>{currentDate()}</Text>
                     </View>
-                    <View style={styles.headerTitle}>
-                        <Text style={styles.headerText}>Notable events on this day</Text>
+                    <View style={navStyles.headerTitle}>
+
+                    {/*this.props.parentCallback(this.state.language)*/}
+
+                        <Picker style={navStyles.headerTitle} 
+                        selectedValue={this.state.language}  
+                        onValueChange={(itemValue, itemPosition) =>  {
+                            this.setState({
+                                language: itemValue, choosenIndex: itemPosition
+                            })
+                            this.props.parentCallback(itemValue)
+                        }}  
+                        >  
+                            <Picker.Item label="Notable events on this day" value="event" />  
+                            <Picker.Item label="Notable birthdays on this day" value="birth" />  
+                            <Picker.Item label="Notable deaths on this day" value="death" />  
+                         </Picker> 
+
                     </View>
                 </View>
             );

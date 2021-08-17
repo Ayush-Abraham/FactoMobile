@@ -6,12 +6,13 @@ import Constants from 'expo-constants';
 import Navbar from './Navbar';
 import FactHolder from './FactHolder'
 
+import {mainStyles} from './styles'
+
+import DropdownMenu from 'react-native-dropdown-menu';
+
 
 const getInfo = async (month,date) => {
-  //var url = 'https://cors-anywhere.herokuapp.com/https://apizen.date/api/'+month+'/'+date+'/';
-  //var url = 'https://cors-anywhere.herokuapp.com/https://apizen.date/api/1/1'
   var url = 'https://apizencorsanywhere.herokuapp.com/https://apizen.date/api/'+month+'/'+date
-  //var url = 'https://apizen.date/api/'+month+'/'+date
 
   const response = await fetch(url,{
     headers: {
@@ -21,7 +22,6 @@ const getInfo = async (month,date) => {
     },
   })
   const body = await response.json(); 
-  //console.log(typeof(body))
   return body;
 };
 
@@ -37,19 +37,40 @@ class App extends Component {
     super(props);
     this.state = {
       loading: true,  
-    };
+      data:'testing'
+    };   
 
     const date=currentDate()
-    //console.log(date)
+    console.log(date)
 
     getInfo(date[1],date[0]).then(res=>{  
       this.setState({
         loading:false,
+        factType: 'event',
         rawInfo: res,
       });
     }).catch(err=>{
       console.log('error is this\n\n'+err)
     })
+  }
+
+  handleCallback = (newFactType) =>{
+    this.setState({
+      loading: true,
+      factType: newFactType,
+    })
+
+    const date=currentDate()
+    getInfo(date[1],date[0]).then(res=>{  
+      this.setState({
+        loading:false,
+        factType: newFactType,
+        rawInfo: res,
+      });
+    }).catch(err=>{
+      console.log('error is this\n\n'+err)
+    })
+
   }
 
   render(){
@@ -59,13 +80,13 @@ class App extends Component {
       content = <Text>Loading...</Text>
     }
     else{
-      content = <FactHolder rawInfo={this.state.rawInfo}/>;   
+      content = <FactHolder rawInfo={this.state.rawInfo} factType={this.state.factType}/>;   
     }
 
     return (    
-      <View style={styles.container}>
+      <View style={mainStyles.container}>
       <StatusBar/>
-        <Navbar/>  
+        <Navbar parentCallback={this.handleCallback}/>  
         <ScrollView>
           <View>
             {content}
@@ -76,7 +97,7 @@ class App extends Component {
   }
 }
   
-const styles = StyleSheet.create({
+/*const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: '100%',
@@ -93,6 +114,6 @@ const styles = StyleSheet.create({
     height: null,
     backgroundColor: 'pink',    
   }
-}); 
+}); */
 
 export default App;
