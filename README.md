@@ -5,4 +5,4 @@ Content is taken from https://apizen.date/.
 
 Website is hosted on https://factomobile-f294e.web.app/
 
-Android app version is in progress.
+Android app version is done, might make it available later
