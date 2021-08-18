@@ -16,6 +16,11 @@ const mainStyles = StyleSheet.create({
     width: null,
     height: null,
     backgroundColor: 'pink',    
+  },
+  loadingText:{
+    color: '#f2f2f2',
+    fontWeight: 'bold',
+    fontSize: 20
   }
 }); 
 
@@ -87,8 +92,12 @@ const factHolderStyles = StyleSheet.create({
   	factContainer:{
   		alignItems: 'flex-start',
   		padding: '2%'
-  	}
+  	},
+    errorText:{
+        color: 'yellow',
+        fontWeight: 'bold',
+        fontSize: 20
+    }
 })
-
 
 export {mainStyles, navStyles, factHolderStyles}

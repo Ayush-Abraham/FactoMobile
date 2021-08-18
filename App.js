@@ -7,9 +7,6 @@ import FactHolder from './FactHolder'
 
 import {mainStyles} from './styles'
 
-//import DropdownMenu from 'react-native-dropdown-menu';
-
-
 const getInfo = async (month,date) => {
   var url = 'https://apizencorsanywhere.herokuapp.com/https://apizen.date/api/'+month+'/'+date
 
@@ -40,7 +37,6 @@ class App extends Component {
     };   
 
     const date=currentDate()
-    console.log(date)
 
     getInfo(date[1],date[0]).then(res=>{  
       this.setState({
@@ -76,7 +72,7 @@ class App extends Component {
     let content
 
     if(this.state.loading){
-      content = <Text>Loading...</Text>
+      content = <View style={mainStyles.container}><Text style={mainStyles.loadingText}>Loading...</Text></View>
     }
     else{
       content = <FactHolder rawInfo={this.state.rawInfo} factType={this.state.factType}/>;   
@@ -94,25 +90,11 @@ class App extends Component {
       </View>    
     );
   }
-}
-  
-/*const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    width: '100%',
-    backgroundColor: '#3a3f4a',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: 60,
-
-  },
-  scrollView: {
-    flex: 1,
-    alignSelf: 'stretch',
-    width: null,
-    height: null,
-    backgroundColor: 'pink',    
-  }
-}); */
+}  
 
 export default App;
+
+/*  
+    App icon made by MONKIK   
+    https://www.flaticon.com/authors/monkik 
+*/

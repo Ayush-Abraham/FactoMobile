@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Platform, Picker} from 'react-native';
 
-
 import {navStyles} from './styles'
 
 function currentDate(){
@@ -42,9 +41,9 @@ class Navbar extends Component {
                             this.props.parentCallback(itemValue)
                         }}  
                         >  
-                            <Picker.Item label="Notable events on this day" value="event" />  
-                            <Picker.Item label="Notable birthdays on this day" value="birth" />  
-                            <Picker.Item label="Notable deaths on this day" value="death" />  
+                            <Picker.Item label={Platform.OS === 'android'? "Notable events":"Notable events on this day"} value="event" />                
+                            <Picker.Item label={Platform.OS === 'android'? "Notable birthdays":"Notable birthdays on this day"} value="birth" />  
+                            <Picker.Item label={Platform.OS === 'android'? "Notable deaths":"Notable deaths on this day"} value="death" />  
                          </Picker> 
 
                     </View>
